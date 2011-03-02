@@ -16,9 +16,6 @@ import android.widget.LinearLayout;
 
 class SplitView extends LinearLayout implements OnTouchListener{
 
-    final float scale = getContext().getResources().getDisplayMetrics().density;
-
-
     private int mHandleId;
 	private View mHandle;
 
@@ -117,10 +114,10 @@ class SplitView extends LinearLayout implements OnTouchListener{
         } else if (me.getAction() == MotionEvent.ACTION_MOVE) {
             ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
             if (getOrientation() == VERTICAL) {
-                    int newHeight =  (int) ((scale * me.getRawY()) - mPointerOffset);
+                    int newHeight =  (int) ( me.getRawY() - mPointerOffset);
                 params.height = newHeight;
             } else {
-                int newWidth =  (int) ((scale * me.getRawX()) - mPointerOffset);
+                int newWidth =  (int) (me.getRawX() - mPointerOffset);
                 params.width = newWidth;
             }   
             mPrimaryContent.setLayoutParams(params);
