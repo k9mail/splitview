@@ -15,13 +15,37 @@
     android:layout_height="wrap_content" 
     android:text="Hello World, ACTIVITY_ENTRY_NAME"
     />
-<ImageView android:layout_width="fill_parent" android:layout_height="20dip"
-        android:id="@+id/handle"/>
-    
-    <TextView  
+    <ImageView 
+        android:id="@+id/handle"
+        android:layout_width="fill_parent" 
+        android:layout_height="20dip"
+        android:background="@drawable/shade_handlebar"
+    />
+<com.fsck.splitview.SplitView 
     android:id="@+id/secondary"
+        android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    splitview:handle="@+id/inner_handle"
+    splitview:primaryContent="@+id/inner_primary"
+    splitview:secondaryContent="@+id/inner_secondary"
+    >
+    <TextView
+        android:id="@+id/inner_primary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:text="Hello World, ACTIVITY_ENTRY_NAME"/>
+    
+    <ImageView 
+        android:id="@+id/inner_handle"
+        android:layout_height="fill_parent" 
+        android:layout_width="20dip"
+        android:background="@drawable/shade_handlebar_vertical"/>
+    <TextView
+    android:id="@+id/inner_secondary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:text="Hello World, ACTIVITY_ENTRY_NAME"
     />
+    </com.fsck.splitview.SplitView>
 </com.fsck.splitview.SplitView>
