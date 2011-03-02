@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <com.fsck.splitview.SplitView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:splitview="http://schemas.android.com/apk/res/com.fsck.example.splitview"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    splitview:handle="@+id/handle"
+    splitview:primaryContent="@+id/primary"
+    splitview:secondaryContent="@+id/secondary"
+    >
+    <TextView  
+    android:id="@+id/primary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:text="Hello World, ACTIVITY_ENTRY_NAME"
+    />
+<ImageView android:layout_width="fill_parent" android:layout_height="20dip"
+        android:id="@+id/handle"/>
+    
+    <TextView  
+    android:id="@+id/secondary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:text="Hello World, ACTIVITY_ENTRY_NAME"
+    />
+</com.fsck.splitview.SplitView>
