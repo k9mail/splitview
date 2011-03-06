@@ -14,7 +14,7 @@ import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
 
-class SplitView extends LinearLayout implements OnTouchListener{
+class SplitView extends LinearLayout implements OnTouchListener {
 
     private int mHandleId;
 	private View mHandle;
@@ -115,10 +115,16 @@ class SplitView extends LinearLayout implements OnTouchListener{
             ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
             if (getOrientation() == VERTICAL) {
                     int newHeight =  (int) ( me.getRawY() - mPointerOffset);
+                if (mSecondaryContent.getMeasuredHeight() < 1 && newHeight > params.height) { return false;}
+                    if (newHeight >= 0) {
                 params.height = newHeight;
+                    }
             } else {
                 int newWidth =  (int) (me.getRawX() - mPointerOffset);
-                params.width = newWidth;
+                if (mSecondaryContent.getMeasuredWidth() < 1 && newWidth > params.width) { return false;}
+                if (newWidth >= 0  ) {
+                    params.width = newWidth;
+                }
             }   
             mPrimaryContent.setLayoutParams(params);
 
