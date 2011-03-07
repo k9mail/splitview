@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <com.fsck.splitview.SplitView 
+<com.fsck.splitview.SplitView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:splitview="http://schemas.android.com/apk/res/com.fsck.example.splitview"
+    android:id="@+id/split_view"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,12 +10,26 @@
     splitview:primaryContent="@+id/primary"
     splitview:secondaryContent="@+id/secondary"
     >
+
+    <LinearLayout
+        android:id="@+id/primary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <Button android:id="@+id/maximize_secondary" android:text="maximize secondary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        />
+    <Button android:id="@+id/maximize_primary" android:text="minimize secondary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        />
     <TextView  
-    android:id="@+id/primary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     android:text="Hello World, ACTIVITY_ENTRY_NAME"
     />
+</LinearLayout>
     <ImageView 
         android:id="@+id/handle"
         android:layout_width="fill_parent" 

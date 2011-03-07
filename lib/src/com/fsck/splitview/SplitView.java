@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
-class SplitView extends LinearLayout implements OnTouchListener {
+public class SplitView extends LinearLayout implements OnTouchListener {
 
     private int mHandleId;
     private View mHandle;
@@ -52,16 +52,11 @@ class SplitView extends LinearLayout implements OnTouchListener {
                                              ": The required attribute secondaryContent must refer to a valid child view.");
         }
 
-
-
         viewAttrs.recycle();
 
         if (e != null) {
             throw e;
         }
-
-
-
     }
 
     @Override
@@ -130,12 +125,58 @@ class SplitView extends LinearLayout implements OnTouchListener {
                 }
             }
             mPrimaryContent.setLayoutParams(params);
-
-
-
         }
 
         return true;
+    }
+
+    public boolean isPrimaryContentMaximized() {
+        if (mSecondaryContent.getMeasuredWidth() < 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public boolean isSecondaryContentMaximized() {
+        if (mPrimaryContent.getMeasuredWidth() < 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void maximizePrimaryContent() {
+        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+        ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
+        if (getOrientation() == VERTICAL) {
+            params.height = LayoutParams.FILL_PARENT;
+            secondaryParams.height = 0;
+        } else {
+            params.width = LayoutParams.FILL_PARENT;
+            secondaryParams.width = 0;
+
+        }
+        mPrimaryContent.setLayoutParams(params);
+        mSecondaryContent.setLayoutParams(secondaryParams);
+
+    }
+    public void maximizeSecondaryContent() {
+        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+        ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
+        if (getOrientation() == VERTICAL) {
+            params.height = 0;
+            secondaryParams.height = LayoutParams.FILL_PARENT;
+        } else {
+            params.width = 0;
+            secondaryParams.width = LayoutParams.FILL_PARENT;
+
+        }
+        mPrimaryContent.setLayoutParams(params);
+        mSecondaryContent.setLayoutParams(secondaryParams);
+
     }
 
 };
