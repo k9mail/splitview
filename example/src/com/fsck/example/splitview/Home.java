@@ -19,7 +19,7 @@ public class Home extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mMaximizePrimaryContent = (Button)findViewById(R.id.maximize_primary);
+        mMaximizePrimaryContent = (Button)findViewById(R.id.maximize_primary);  
         mMaximizePrimaryContent.setOnClickListener( new OnClickListener() {
             @Override public void onClick(View v) {
                 ((SplitView)findViewById(R.id.split_view)).maximizePrimaryContent();
@@ -27,7 +27,7 @@ public class Home extends Activity
 
         });
 
-        mMaximizeSecondaryContent = (Button)findViewById(R.id.maximize_secondary);
+        mMaximizeSecondaryContent = (Button)findViewById(R.id.maximize_secondary);  
         mMaximizeSecondaryContent.setOnClickListener( new OnClickListener() {
             @Override public void onClick(View v) {
                 ((SplitView)findViewById(R.id.split_view)).maximizeSecondaryContent();

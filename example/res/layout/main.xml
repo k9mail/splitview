@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.fsck.splitview.SplitView
+<com.fsck.splitview.SplitView 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:splitview="http://schemas.android.com/apk/res/com.fsck.example.splitview"
     android:id="@+id/split_view"
@@ -14,15 +14,15 @@
     <LinearLayout
         android:id="@+id/primary"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content" 
     android:orientation="vertical">
     <Button android:id="@+id/maximize_secondary" android:text="maximize secondary"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content" 
         />
-    <Button android:id="@+id/maximize_primary" android:text="minimize secondary"
+    <Button android:id="@+id/maximize_primary" android:text="minimize secondary" 
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content" 
         />
     <TextView  
     android:layout_width="wrap_content"

@@ -27,6 +27,8 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     private boolean mDragging;
     private float mPointerOffset;
 
+    final static private int MAXIMIZED_VIEW_TOLERANCE_DIP = 30;
+
     public SplitView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -131,7 +133,8 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     }
 
     public boolean isPrimaryContentMaximized() {
-        if (mSecondaryContent.getMeasuredWidth() < 1) {
+        if ( (getOrientation() == VERTICAL && (mSecondaryContent.getMeasuredHeight() < MAXIMIZED_VIEW_TOLERANCE_DIP) ) ||
+             (getOrientation() == HORIZONTAL && (mSecondaryContent.getMeasuredWidth() < MAXIMIZED_VIEW_TOLERANCE_DIP) )) { 
             return true;
         } else {
             return false;
@@ -141,7 +144,8 @@ public class SplitView extends LinearLayout implements OnTouchListener {
 
 
     public boolean isSecondaryContentMaximized() {
-        if (mPrimaryContent.getMeasuredWidth() < 1) {
+        if ( (getOrientation() == VERTICAL && (mPrimaryContent.getMeasuredHeight() < MAXIMIZED_VIEW_TOLERANCE_DIP) ) ||
+             (getOrientation() == HORIZONTAL && (mPrimaryContent.getMeasuredWidth() < MAXIMIZED_VIEW_TOLERANCE_DIP) )) { 
             return true;
         } else {
             return false;
