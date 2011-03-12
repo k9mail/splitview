@@ -9,6 +9,7 @@ import com.fsck.splitview.SplitView;
 
 public class Home extends Activity
 {
+    private Button mHalves;
     private Button mMaximizePrimaryContent;
     private Button mMaximizeSecondaryContent;
 
@@ -31,6 +32,14 @@ public class Home extends Activity
         mMaximizeSecondaryContent.setOnClickListener( new OnClickListener() {
             @Override public void onClick(View v) {
                 ((SplitView)findViewById(R.id.split_view)).maximizeSecondaryContent();
+            }
+
+        });
+
+        mHalves = (Button)findViewById(R.id.halves);
+        mHalves.setOnClickListener( new OnClickListener() {
+            @Override public void onClick(View v) {
+                ((SplitView)findViewById(R.id.split_view)).setPrimaryContentSize(200);
             }
 
         });

@@ -111,25 +111,34 @@ public class SplitView extends LinearLayout implements OnTouchListener {
             return true;
         } else if (me.getAction() == MotionEvent.ACTION_MOVE) {
             if (getOrientation() == VERTICAL) {
-                return setPrimaryHeight( (int)(me.getRawY() - mPointerOffset));
+                return setPrimaryContentHeight( (int)(me.getRawY() - mPointerOffset));
             } else {
-                return setPrimaryWidth( (int)(me.getRawX() - mPointerOffset) );
+                return setPrimaryContentWidth( (int)(me.getRawX() - mPointerOffset) );
             }
         }
         return true;
     }
 
 
-    public boolean setPrimarySize(int newSize) {
+    public int getPrimaryContentSize() {
+            if (getOrientation() == VERTICAL) {
+                return mPrimaryContent.getMeasuredHeight();
+            } else {
+             return mPrimaryContent.getMeasuredWidth();
+            }
+
+    }
+
+    public boolean setPrimaryContentSize(int newSize) {
         if (getOrientation() == VERTICAL) {
-            return setPrimaryHeight(newSize);
+            return setPrimaryContentHeight(newSize);
         } else {
-            return setPrimaryWidth(newSize);
+            return setPrimaryContentWidth(newSize);
         }
     }
 
 
-    private boolean setPrimaryHeight(int newHeight) {
+    private boolean setPrimaryContentHeight(int newHeight) {
         ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
         if (mSecondaryContent.getMeasuredHeight() < 1 && newHeight > params.height) {
             return false;
@@ -137,12 +146,13 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         if (newHeight >= 0) {
             params.height = newHeight;
         }
+        unMinimizeSecondaryContent();
         mPrimaryContent.setLayoutParams(params);
         return true;
 
     }
 
-    private boolean setPrimaryWidth(int newWidth) {
+    private boolean setPrimaryContentWidth(int newWidth) {
         ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
 
 
@@ -152,6 +162,7 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         if (newWidth >= 0) {
             params.width = newWidth;
         }
+        unMinimizeSecondaryContent();
         mPrimaryContent.setLayoutParams(params);
         return true;
     }
@@ -179,29 +190,39 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
         ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
         if (getOrientation() == VERTICAL) {
-            params.height = LayoutParams.FILL_PARENT;
-            secondaryParams.height = 0;
+            params.height = LayoutParams.FILL_PARENT;// getLayoutParams().height - mHandle.getLayoutParams().height;
+            secondaryParams.height = 1;
         } else {
-            params.width = LayoutParams.FILL_PARENT;
-            secondaryParams.width = 0;
+            params.width = LayoutParams.FILL_PARENT; //getLayoutParams().width - mHandle.getLayoutParams().width;
+            secondaryParams.width = 1;
+        }
+        mPrimaryContent.setLayoutParams(params);
+        mSecondaryContent.setLayoutParams(secondaryParams);
+    }
 
+    public void maximizeSecondaryContent() {
+        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+        ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
+        if (getOrientation() == VERTICAL) {
+            params.height = 1;
+           secondaryParams.height = LayoutParams.FILL_PARENT; //getLayoutParams().height - mHandle.getLayoutParams().height;
+        } else {
+            params.width = 1;
+            secondaryParams.width = LayoutParams.FILL_PARENT; //getLayoutParams().width - mHandle.getLayoutParams().width;
         }
         mPrimaryContent.setLayoutParams(params);
         mSecondaryContent.setLayoutParams(secondaryParams);
 
     }
-    public void maximizeSecondaryContent() {
-        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+
+    private void unMinimizeSecondaryContent() {
         ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
         if (getOrientation() == VERTICAL) {
-            params.height = 0;
             secondaryParams.height = LayoutParams.FILL_PARENT;
         } else {
-            params.width = 0;
             secondaryParams.width = LayoutParams.FILL_PARENT;
 
         }
-        mPrimaryContent.setLayoutParams(params);
         mSecondaryContent.setLayoutParams(secondaryParams);
 
     }
