@@ -35,7 +35,7 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     private float mPointerOffset;
 
     final static private int MAXIMIZED_VIEW_TOLERANCE_DIP = 30;
-    final static private int TAP_DRIFT_TOLERANCE = 2;
+    final static private int TAP_DRIFT_TOLERANCE = 5;
     final static private int SINGLE_TAP_MAX_TIME = 200;
 
     public SplitView(Context context, AttributeSet attrs) {
