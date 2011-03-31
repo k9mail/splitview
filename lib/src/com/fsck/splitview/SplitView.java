@@ -35,6 +35,7 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     private float mPointerOffset;
 
     final static private int MAXIMIZED_VIEW_TOLERANCE_DIP = 30;
+    final static private int TAP_DRIFT_TOLERANCE = 2;
 
     public SplitView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -103,7 +104,7 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         if (view != mHandle) {
             return false;
         }
-
+        Log.v("foo", "got touch event " + me);
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
             mDragging = true;
             mDraggingStarted = SystemClock.elapsedRealtime();
@@ -119,14 +120,10 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         else if (me.getAction() == MotionEvent.ACTION_UP) {
             mDragging = false;
             if (
-                    mDragStartX <(me.getX()+2) && 
-                    mDragStartX > (me.getX() -2) && 
-                    
-                    
-                    
-                    mDragStartY <  (me.getY() + 2) &&
-                    mDragStartY > (me.getY() - 2) 
-                &&        
+                    mDragStartX <(me.getX()+TAP_DRIFT_TOLERANCE) && 
+                    mDragStartX > (me.getX() -TAP_DRIFT_TOLERANCE) && 
+                    mDragStartY <  (me.getY() + TAP_DRIFT_TOLERANCE) &&
+                    mDragStartY > (me.getY() - TAP_DRIFT_TOLERANCE) &&        
              ((SystemClock.elapsedRealtime() - mDraggingStarted) < 200)) {
                 if (isPrimaryContentMaximized() || isSecondaryContentMaximized()) {
                     setPrimaryContentSize(mLastPrimaryContentSize);
