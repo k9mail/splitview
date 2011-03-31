@@ -35,8 +35,8 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     private float mPointerOffset;
 
     final static private int MAXIMIZED_VIEW_TOLERANCE_DIP = 30;
-    final static private int TAP_DRIFT_TOLERANCE = 5;
-    final static private int SINGLE_TAP_MAX_TIME = 200;
+    final static private int TAP_DRIFT_TOLERANCE = 3;
+    final static private int SINGLE_TAP_MAX_TIME = 175;
 
     public SplitView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -105,7 +105,7 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         if (view != mHandle) {
             return false;
         }
-        Log.v("foo", "got touch event " + me);
+        //Log.v("foo", "at "+SystemClock.elapsedRealtime()+" got touch event " + me);
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
             mDragging = true;
             mDraggingStarted = SystemClock.elapsedRealtime();
