@@ -143,6 +143,10 @@ public class SplitView extends LinearLayout implements OnTouchListener {
             return true;
     }
 
+    
+    public View getHandle() {
+        return mHandle;
+    }
 
     public int getPrimaryContentSize() {
             if (getOrientation() == VERTICAL) {
