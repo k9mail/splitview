@@ -44,7 +44,8 @@
     android:id="@+id/secondary"
         android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1"
     splitview:handle="@+id/inner_handle"
     splitview:primaryContent="@+id/inner_primary"
     splitview:secondaryContent="@+id/inner_secondary"
@@ -52,7 +53,8 @@
     <TextView
         android:id="@+id/inner_primary"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" 
+    android:layout_height="wrap_content"
+    android:layout_weight="1" 
     android:text="Hello World, ACTIVITY_ENTRY_NAME"/>
     
     <ImageView 
@@ -64,6 +66,7 @@
     android:id="@+id/inner_secondary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
+    android:layout_weight="1"
     android:text="Hello World, ACTIVITY_ENTRY_NAME"
     />
     </com.fsck.splitview.SplitView>

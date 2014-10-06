@@ -100,7 +100,6 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     }
     @Override
     public boolean onTouch(View view, MotionEvent me) {
-        ViewGroup.LayoutParams thisParams = getLayoutParams();
         // Only capture drag events if we start
         if (view != mHandle) {
             return false;
@@ -112,9 +111,9 @@ public class SplitView extends LinearLayout implements OnTouchListener {
             mDragStartX = me.getX();
             mDragStartY = me.getY();
             if (getOrientation() == VERTICAL) {
-                mPointerOffset = me.getRawY() - mPrimaryContent.getMeasuredHeight();
+                mPointerOffset = me.getRawY() - getPrimaryContentSize();
             } else {
-                mPointerOffset = me.getRawX() - mPrimaryContent.getMeasuredWidth();
+                mPointerOffset = me.getRawX() - getPrimaryContentSize();
             }
             return true;
         }
@@ -167,12 +166,22 @@ public class SplitView extends LinearLayout implements OnTouchListener {
 
 
     private boolean setPrimaryContentHeight(int newHeight) {
-        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+        // the new primary content height should not be less than 0 to make the
+        // handler always visible
+        newHeight = Math.max(0, newHeight);
+        // the new primary content height should not be more than the SplitView
+        // height minus handler height to make the handler always visible 
+        newHeight = Math.min(newHeight, getMeasuredHeight() - mHandle.getMeasuredHeight());
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mPrimaryContent
+                .getLayoutParams();
         if (mSecondaryContent.getMeasuredHeight() < 1 && newHeight > params.height) {
             return false;
         }
         if (newHeight >= 0) {
             params.height = newHeight;
+            // set the primary content parameter to do not stretch anymore and
+            // use the height specified in the layout params
+            params.weight = 0;
         }
         unMinimizeSecondaryContent();
         mPrimaryContent.setLayoutParams(params);
@@ -181,7 +190,14 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     }
 
     private boolean setPrimaryContentWidth(int newWidth) {
-        ViewGroup.LayoutParams params = mPrimaryContent.getLayoutParams();
+    	// the new primary content width should not be less than 0 to make the
+        // handler always visible
+    	newWidth = Math.max(0, newWidth);
+    	// the new primary content width should not be more than the SplitView
+        // width minus handler width to make the handler always visible 
+    	newWidth = Math.min(newWidth, getMeasuredWidth() - mHandle.getMeasuredWidth());
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mPrimaryContent
+                .getLayoutParams();
 
 
         if (mSecondaryContent.getMeasuredWidth() < 1 && newWidth > params.width) {
@@ -189,6 +205,9 @@ public class SplitView extends LinearLayout implements OnTouchListener {
         }
         if (newWidth >= 0) {
             params.width = newWidth;
+            // set the primary content parameter to do not stretch anymore and
+            // use the width specified in the layout params
+            params.weight = 0;
         }
         unMinimizeSecondaryContent();
         mPrimaryContent.setLayoutParams(params);
@@ -227,14 +246,19 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     private void maximizeContentPane(View toMaximize, View toUnMaximize) {
         mLastPrimaryContentSize = getPrimaryContentSize();
 
-        ViewGroup.LayoutParams params = toUnMaximize.getLayoutParams();
-        ViewGroup.LayoutParams secondaryParams = toMaximize.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) toUnMaximize
+                .getLayoutParams();
+        LinearLayout.LayoutParams secondaryParams = (LinearLayout.LayoutParams) toMaximize
+                .getLayoutParams();
+        // set the primary content parameter to do not stretch anymore and use
+        // the height/width specified in the layout params
+        params.weight = 0;
+        // set the secondary content parameter to use all the available space
+        secondaryParams.weight = 1;
         if (getOrientation() == VERTICAL) {
             params.height = 1;
-           secondaryParams.height = LayoutParams.FILL_PARENT; //getLayoutParams().height - mHandle.getLayoutParams().height;
         } else {
             params.width = 1;
-            secondaryParams.width = LayoutParams.FILL_PARENT; //getLayoutParams().width - mHandle.getLayoutParams().width;
         }
         toUnMaximize.setLayoutParams(params);
         toMaximize.setLayoutParams(secondaryParams);
@@ -244,13 +268,10 @@ public class SplitView extends LinearLayout implements OnTouchListener {
     }
 
     private void unMinimizeSecondaryContent() {
-        ViewGroup.LayoutParams secondaryParams = mSecondaryContent.getLayoutParams();
-        if (getOrientation() == VERTICAL) {
-            secondaryParams.height = LayoutParams.FILL_PARENT;
-        } else {
-            secondaryParams.width = LayoutParams.FILL_PARENT;
-
-        }
+        LinearLayout.LayoutParams secondaryParams = (LinearLayout.LayoutParams) mSecondaryContent
+                .getLayoutParams();
+        // set the secondary content parameter to use all the available space
+        secondaryParams.weight = 1;
         mSecondaryContent.setLayoutParams(secondaryParams);
 
     }
